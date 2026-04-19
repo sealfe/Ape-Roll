@@ -1,0 +1,7 @@
+tests/
+hooks/
+docs/
+.github/
+.git*
+*.bats
+uninstall.sh

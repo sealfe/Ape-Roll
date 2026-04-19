@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# For contributors working on roll itself.
+# Regular users: npm install -g roll
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BIN_SRC="$REPO_DIR/bin/roll"
 BIN_DIR="$HOME/.local/bin"

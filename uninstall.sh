@@ -78,9 +78,9 @@ while IFS= read -r ai_dir; do
   done
 
   if [[ -d "$ai_dir/skills" && ! -L "$ai_dir/skills" ]]; then
-    count=$(find "$ai_dir/skills" -maxdepth 1 -type l -name "roll-*" 2>/dev/null | wc -l | tr -d ' ')
+    count=$(find "$ai_dir/skills" -maxdepth 1 \( -type l -o -type d \) -name "roll-*" 2>/dev/null | wc -l | tr -d ' ')
     [[ "$count" -gt 0 ]] && \
-      echo -e "  ${RED}✕${NC} ${local_name}/skills/roll-* ($count symlinks)"
+      echo -e "  ${RED}✕${NC} ${local_name}/skills/roll-* ($count entries)"
   fi
 done < <(_get_ai_dirs)
 
@@ -115,13 +115,16 @@ while IFS= read -r ai_dir; do
     fi
   done
 
-  # Remove roll-* skill symlinks
+  # Remove roll-* skill entries (symlinks and real directories)
   if [[ -d "$ai_dir/skills" && ! -L "$ai_dir/skills" ]]; then
-    while IFS= read -r link; do
-      run "rm '$link'"
-    done < <(find "$ai_dir/skills" -maxdepth 1 -type l -name "roll-*" 2>/dev/null || true)
-    count=$(find "$ai_dir/skills" -maxdepth 1 -type l -name "roll-*" 2>/dev/null | wc -l | tr -d ' ')
-    [[ "$count" -gt 0 ]] && ok "Removed roll-* skill symlinks from: ${local_name}/skills/"
+    while IFS= read -r entry; do
+      if [[ -L "$entry" ]]; then
+        run "rm '$entry'"
+      else
+        run "rm -rf '$entry'"
+      fi
+    done < <(find "$ai_dir/skills" -maxdepth 1 \( -type l -o -type d \) -name "roll-*" 2>/dev/null || true)
+    ok "Removed roll-* skill entries from: ${local_name}/skills/"
   fi
 done < <(_get_ai_dirs)
 

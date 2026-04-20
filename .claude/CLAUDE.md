@@ -44,6 +44,15 @@
 - Testing: Vitest + execa (CLI integration tests)
 - Distribution: npm package with bin entry
 
+## Scope Discipline
+
+- **Approach confirmation required** for UX, output format, or automation-level decisions: output a 2–3 bullet plan and wait for confirmation before editing files.
+- **Automation scope**: never assume manual vs automatic — state the assumption and confirm.
+
+## Bilingual Output Convention
+
+- EN + ZH CLI output or docs: English and Chinese on **separate lines**, never inline on the same line.
+
 ## Claude Code Notes
 
 - No server, no frontend. CLI tool only.

@@ -7,8 +7,8 @@ load helpers
 
 setup() {
   integration_setup
-  # Ensure WK_HOME exists before sync (setup populates conventions/skills)
-  run_wk setup
+  # Ensure ROLL_HOME exists before sync (setup populates conventions/skills)
+  run_roll setup
 }
 
 teardown() {
@@ -18,13 +18,13 @@ teardown() {
 # ─── sync: conventions written ────────────────────────────────────────────────
 
 @test "sync: roll.md is written to ~/.claude/" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   [ -f "${TEST_TMP}/.claude/roll.md" ]
 }
 
 @test "sync: roll.md content matches ROLL_HOME/conventions/global/CLAUDE.md" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   diff "${ROLL_HOME}/conventions/global/CLAUDE.md" "${TEST_TMP}/.claude/roll.md"
 }
@@ -32,7 +32,7 @@ teardown() {
 # ─── sync: @roll.md appended to CLAUDE.md ──────────────────────────────────────
 
 @test "sync: @roll.md is present in ~/.claude/CLAUDE.md" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   [ -f "${TEST_TMP}/.claude/CLAUDE.md" ]
   grep -qF "@roll.md" "${TEST_TMP}/.claude/CLAUDE.md"
@@ -41,9 +41,9 @@ teardown() {
 # ─── sync: idempotent (@roll.md not duplicated) ────────────────────────────────
 
 @test "sync: @roll.md is not duplicated when synced twice" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   local count
   count=$(grep -cF "@roll.md" "${TEST_TMP}/.claude/CLAUDE.md")
@@ -54,7 +54,7 @@ teardown() {
 
 @test "sync: absent ~/.gemini/ is not recreated by sync" {
   rm -rf "${TEST_TMP}/.gemini"
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   [ ! -d "${TEST_TMP}/.gemini" ]
 }
@@ -62,7 +62,7 @@ teardown() {
 # ─── sync: skill symlinks exist ──────────────────────────────────────────────
 
 @test "sync: ~/.claude/skills/ contains roll-* symlinks" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   local count
   count=$(find "${TEST_TMP}/.claude/skills" -maxdepth 1 -mindepth 1 -type l -name "roll-*" | wc -l | tr -d ' ')
@@ -72,7 +72,7 @@ teardown() {
 # ─── sync: both conventions and skills applied in one call ───────────────────
 
 @test "sync: roll.md and roll-* symlinks both exist after single sync" {
-  run_wk sync
+  run_roll sync
   [ "$status" -eq 0 ]
   [ -f "${TEST_TMP}/.claude/roll.md" ]
   local count

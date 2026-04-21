@@ -25,7 +25,7 @@ integration_teardown() {
 }
 
 # Run roll with TEST_TMP as HOME so ~ expansions resolve inside sandbox.
-# Usage: run_wk <cmd> [args...]
-run_wk() {
+# Usage: run_roll <cmd> [args...]
+run_roll() {
   ROLL_HOME="${ROLL_HOME}" HOME="${TEST_TMP}" run bash "$ROLL_BIN" "$@"
 }

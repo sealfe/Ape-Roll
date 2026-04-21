@@ -8,7 +8,7 @@ load helpers
 
 setup() {
   integration_setup
-  run_wk setup
+  run_roll setup
   PROJECT_DIR="${TEST_TMP}/myproject"
   mkdir -p "$PROJECT_DIR"
 }
@@ -18,26 +18,26 @@ teardown() {
 }
 
 # Helper: run roll init inside PROJECT_DIR — no stdin needed (no prompts)
-wk_init() {
+roll_init() {
   bash -c "cd '${PROJECT_DIR}' && HOME='${TEST_TMP}' ROLL_HOME='${ROLL_HOME}' '${ROLL_BIN}' init"
 }
 
 # ─── Happy path: fresh project ─────────────────────────────────────────────────
 
 @test "init: creates AGENTS.md in new project" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/AGENTS.md" ]
 }
 
 @test "init: creates BACKLOG.md in new project" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/BACKLOG.md" ]
 }
 
 @test "init: creates docs/features/ in new project" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -d "${PROJECT_DIR}/docs/features" ]
 }
@@ -45,33 +45,33 @@ wk_init() {
 # ─── Happy path: re-merge (existing AGENTS.md) ────────────────────────────────
 
 @test "init: re-merge exits 0 when AGENTS.md already exists" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/AGENTS.md" ]
 
   # Second init — no prompts, should succeed and preserve AGENTS.md
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/AGENTS.md" ]
 }
 
 @test "init: backfills BACKLOG.md when AGENTS.md exists but backlog is missing" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   rm -f "${PROJECT_DIR}/BACKLOG.md"
 
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/AGENTS.md" ]
   [ -f "${PROJECT_DIR}/BACKLOG.md" ]
 }
 
 @test "init: backfills docs/features when AGENTS.md exists but features dir is missing" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   rm -rf "${PROJECT_DIR}/docs"
 
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [ -f "${PROJECT_DIR}/AGENTS.md" ]
   [ -d "${PROJECT_DIR}/docs/features" ]
@@ -80,7 +80,7 @@ wk_init() {
 # ─── UX: clean completion message ────────────────────────────────────────────
 
 @test "init: output includes 'Initialized' on success" {
-  run wk_init
+  run roll_init
   [ "$status" -eq 0 ]
   [[ "$output" == *"Initialized"* ]]
 }
@@ -88,8 +88,8 @@ wk_init() {
 # ─── Error path ────────────────────────────────────────────────────────────────
 
 @test "init: exits non-zero when templates not found (setup not run)" {
-  local empty_wk="${TEST_TMP}/empty_wk"
-  mkdir -p "$empty_wk"
-  run bash -c "cd '${PROJECT_DIR}' && HOME='${TEST_TMP}' ROLL_HOME='${empty_wk}' '${ROLL_BIN}' init"
+  local empty_roll="${TEST_TMP}/empty_roll"
+  mkdir -p "$empty_roll"
+  run bash -c "cd '${PROJECT_DIR}' && HOME='${TEST_TMP}' ROLL_HOME='${empty_roll}' '${ROLL_BIN}' init"
   [ "$status" -ne 0 ]
 }

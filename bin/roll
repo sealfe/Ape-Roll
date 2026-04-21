@@ -250,8 +250,8 @@ YAML
 # ─── Internal: create or repair per-skill symlinks (non-destructive) ─────────
 _link_skills() {
   local force="${1:-false}"
-  local wk_skills_real pkg_skills_real
-  wk_skills_real="$(canonical_dir "$ROLL_HOME/skills" 2>/dev/null || true)"
+  local roll_skills_real pkg_skills_real
+  roll_skills_real="$(canonical_dir "$ROLL_HOME/skills" 2>/dev/null || true)"
   pkg_skills_real="$(canonical_dir "$ROLL_PKG_DIR/skills" 2>/dev/null || true)"
 
   while IFS= read -r entry; do
@@ -279,17 +279,15 @@ _link_skills() {
       continue
     fi
 
-    # Handle legacy whole-dir symlink
+    # Handle whole-dir symlink (legacy or user-created)
     if [[ -L "$skills_dir" ]]; then
       local skills_target
       skills_target="$(readlink "$skills_dir")"
-      if [[ -n "$skills_real" && "$skills_real" == "$wk_skills_real" ]]; then
-        continue  # Whole-dir symlink to WK skills — still functional
+      if [[ -n "$skills_real" && "$skills_real" == "$roll_skills_real" ]]; then
+        continue  # Whole-dir symlink to ~/.roll/skills — still functional
       fi
-      # Dangling or legacy whole-dir symlink — remove and recreate as per-skill links
-      if [[ -z "$skills_real" ]] || \
-         [[ "$skills_target" == *"cybernetix"* ]] || \
-         [[ "$skills_target" == *"wukong"* ]]; then
+      # Dangling whole-dir symlink — remove and recreate as per-skill links
+      if [[ -z "$skills_real" ]]; then
         info "Removing legacy symlink ~/${ai_name}/skills -> ${skills_target/#$HOME/~}  正在移除遗留软链接 ~/${ai_name}/skills -> ${skills_target/#$HOME/~}"
         rm "$skills_dir"
       else

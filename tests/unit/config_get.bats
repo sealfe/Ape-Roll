@@ -3,7 +3,7 @@
 # Load the script (sourcing defines all functions without executing main)
 setup() {
   source "${BATS_TEST_DIRNAME}/../../bin/roll"
-  # Override WK_CONFIG after sourcing — the script assigns WK_CONFIG on load,
+  # Override ROLL_CONFIG after sourcing — the script assigns ROLL_CONFIG on load,
   # so we must set it afterwards to point at our fixture.
   export ROLL_CONFIG="${BATS_TEST_DIRNAME}/../fixtures/configs/basic.yaml"
 }
@@ -27,7 +27,7 @@ setup() {
 }
 
 @test "config_get: returns default when config file missing" {
-  export ROLL_CONFIG="/tmp/wukong_nonexistent_config_$$.yaml"
+  export ROLL_CONFIG="/tmp/roll_nonexistent_config_$$.yaml"
   run config_get "editor" "default_editor"
   [ "$status" -eq 0 ]
   [ "$output" = "default_editor" ]

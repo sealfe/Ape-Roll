@@ -32,7 +32,7 @@ graph TB
 
     subgraph "Loop B: Implementation & Iteration"
         B1["roll init<br/>CLI Command"] --> B2["$roll-build<br/>TCR-Driven Development"]
-        B2 --> B3["$roll-.code-review<br/>Pre-commit Review"]
+        B2 --> B3["$roll-.review<br/>Pre-commit Review"]
         B3 --> B4["CI / Deploy"]
         B4 --> B5["Verification Gate<br/>Live Evidence Required"]
         B5 --> B6["$roll-.changelog<br/>Change Log"]
@@ -263,7 +263,7 @@ This is Roll's core execution unit. Its engineering significance lies in a funda
 │            PASS                                      │
 │              │                                       │
 │              ▼                                       │
-│  4. $roll-.code-review (self-review gate)             │
+│  4. $roll-.review (self-review gate)             │
 │              │                                       │
 │              ▼                                       │
 │  5. git commit (micro-commit)                        │
@@ -498,8 +498,8 @@ Beyond the active Skills in the three loops, Roll includes a set of passively tr
 | Skill | Trigger | Purpose |
 |-------|---------|---------|
 | `$roll-.echo` | When user input is ambiguous or contradictory | Restates intent and resolves ambiguity before proceeding, avoiding wasted compute on a misunderstood instruction |
-| `$roll-.code-review` | After each TCR micro-step completes | Multi-dimensional self-review (security, maintainability, performance, scope); a Critical finding blocks the commit |
-| `$roll-.qa-cover` | During the Test Design Review phase | Defines the test pyramid (Unit > E2E > Visual > Smoke) and enforces coverage thresholds |
+| `$roll-.review` | After each TCR micro-step completes | Multi-dimensional self-review (security, maintainability, performance, scope); a Critical finding blocks the commit |
+| `$roll-.qa` | During the Test Design Review phase | Defines the test pyramid (Unit > E2E > Visual > Smoke) and enforces coverage thresholds |
 | `$roll-.changelog` | After a successful deployment | Extracts completed items from BACKLOG and generates a user-readable changelog |
 
 ---

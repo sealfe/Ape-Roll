@@ -124,7 +124,7 @@ User: "Help me design the user system" / "What approach should we use for search
               ▼
     "Confirm and execute?"
     │
-    ├── Yes ──→ $roll-story US-XXX
+    ├── Yes ──→ $roll-build US-XXX
     │
     └── No  ──→ Wait for user confirmation
 ```
@@ -227,7 +227,7 @@ FEATURE_FILE="docs/features/${FEATURE}.md"
 $roll-design "login feature" → Create US-AUTH-001
 User: "Execute US-AUTH-001"
     ↓
-$roll-story US-AUTH-001 → TCR → CI/CD → Deploy
+$roll-build US-AUTH-001 → TCR → CI/CD → Deploy
 ```
 
 ### With fix-build

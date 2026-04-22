@@ -24,7 +24,7 @@ This skill fires **automatically** when the AI detects unclear intent. It should
 
 **Do NOT activate when**:
 - Intent is already clear and actionable ("add a login button to the header")
-- User gives a specific command with a skill trigger ("$roll-story US-001")
+- User gives a specific command with a skill trigger ("$roll-build US-001")
 - User is answering a question you asked (they're clarifying, not initiating)
 - The task is simple enough that misinterpretation risk is negligible
 

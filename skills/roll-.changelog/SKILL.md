@@ -10,7 +10,7 @@ After successful Build & Deploy, extracts completed Stories from BACKLOG.md to g
 
 ## When Triggered
 
-- **Auto-triggered**: After successful deploy of `$roll-story` or `$roll-fix`
+- **Auto-triggered**: After successful deploy of `$roll-build` or `$roll-fix`
 - **Manual trigger**: When user requests "update changelog" or "generate release notes"
 
 ## Workflow
@@ -71,7 +71,7 @@ git push
 
 ## Integration
 
-After successful deploy in `$roll-story` / `$roll-fix` / `$roll-fly`:
+After successful deploy in `$roll-build` / `$roll-fix`:
 
 ```markdown
 **Post-Deploy:**

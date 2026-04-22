@@ -424,5 +424,5 @@ After `$roll-debug` finds issues:
 
 # For a complex multi-step fix
 # → Create US-XXX in backlog
-# → $roll-story US-XXX
+# → $roll-build US-XXX
 ```

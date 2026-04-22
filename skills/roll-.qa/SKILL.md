@@ -1,12 +1,12 @@
 ---
 hidden: true
-name: roll-.qa-cover
+name: roll-.qa
 description: QA coverage reference for build skills. Defines test pyramid (unit/E2E/visual/smoke), coverage requirements, and CI gates. Ensures quality assurance across all testing layers.
 ---
 
 # QA Cover
 
-This is a **reference skill** used by `roll-story`, `roll-fix`, and `roll-fly` for quality assurance and test coverage.
+This is a **reference skill** used by `roll-build` and `roll-fix` for quality assurance and test coverage.
 
 ## When to Apply
 

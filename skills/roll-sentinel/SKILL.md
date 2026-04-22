@@ -341,7 +341,7 @@ async function batchCheck(stories) {
 │  $roll-debug               On-demand deep diagnosis (aux) │
 │  (When Sentinel finds an issue, manually trigger deep dive) │
 │                                                             │
-│  $roll-story            Post-fix regression verify     │
+│  $roll-build            Post-fix regression verify     │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
